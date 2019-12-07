@@ -32,7 +32,7 @@ components:
       properties:
         source:
           type: string
-        sensorType:
+        mote:
           type: string
         points:
           type: array

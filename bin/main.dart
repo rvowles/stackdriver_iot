@@ -21,7 +21,7 @@ void main(List<String> arguments) async {
   var handler = const shelf.Pipeline().addMiddleware(shelf.logRequests())
       .addHandler(_dispatchRequest);
 
-  await io.serve(handler, 'localhost', 3000).then((server) {
+  await io.serve(handler, '0.0.0.0', 3000).then((server) {
     _log.info('Serving at http://${server.address.host}:${server.port}');
   });
 }

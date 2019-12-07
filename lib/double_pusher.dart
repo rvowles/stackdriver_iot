@@ -26,8 +26,8 @@ abstract class DoublePusher extends Pusher {
     final metric = Metric()
       ..labels = {
         'source': timeseries.source,
-        'sensor': timeseries.sensorType,
-        'point-type':
+        'mote': timeseries.mote,
+        'point_type':
             PointTypeTypeTransformer.toJsonMap[pointType].toLowerCase()
       }
       ..type = metricDescriptor.type;
