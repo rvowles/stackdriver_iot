@@ -1,16 +1,15 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:args/args.dart';
 import 'package:googleapis/monitoring/v3.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import 'package:iot_api/api.dart';
-import 'package:logging/logging.dart';
-import 'package:stackdriver_pusher/pusher.dart';
-import 'package:stackdriver_pusher/temperature_pusher.dart';
+//import 'package:logging/logging.dart';
+import 'package:stackdriver_iot/pusher.dart';
+import 'package:stackdriver_iot/temperature_pusher.dart';
 
-final _log = Logger('stackdriver');
+//final _log = Logger('stackdriver');
 
 class StackdriverPusherClient {
   final http.Client client;
@@ -59,7 +58,7 @@ class StackdriverPusherClient {
   void processTimeseriesData(Timeseries data) async {
     // all async - no problem
     data.points.forEach((point) {
-      Pusher p = pushers[point.type];
+      final p = pushers[point.type];
       if (p != null) {
         p.process(data, point);
       }

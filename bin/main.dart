@@ -17,12 +17,12 @@ void main(List<String> arguments) async {
 }
 
 Future<shelf.Response> _dispatchRequest(shelf.Request request) async {
-  print("path ${request.url.path} method: ${request.method}");
+  print('path ${request.url.path} method: ${request.method}');
   if (request.url.path == 'timeseries' && request.method == 'PUT') {
     if (request.headers['content-type'] == 'application/json') {
       final data = await utf8.decodeStream(request.read());
       print(api.Timeseries.fromJson(jsonDecode(data)));
-      return shelf.Response.ok("saved");
+      return shelf.Response.ok('saved');
     } else {
       return shelf.Response(405, body: 'invalid method or content-type', headers: {'content-type': 'text/plain'});
     }

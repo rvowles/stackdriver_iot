@@ -1,7 +1,7 @@
 import 'package:googleapis/monitoring/v3.dart';
 import 'package:iot_api/api.dart';
 import 'package:logging/logging.dart';
-import 'package:stackdriver_pusher/pusher.dart';
+import 'package:stackdriver_iot/pusher.dart';
 
 // have to use 'custom.googleapis.com/' as prefix cannot use anything else
 final _TEMPERATURE_METRIC_TYPE = 'custom.googleapis.com/iot/temperature';
