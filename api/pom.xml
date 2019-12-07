@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.bluetrainsoftware.iot</groupId>
+  <artifactId>iot_api</artifactId>
+  <version>1.1-SNAPSHOT</version>
+  <name>iot_api</name>
+
+  <description>
+    API for IOT Stackdriver Collector
+  </description>
+
+  <url>https://featurehub.io</url>
+  <developers>
+    <developer>
+      <email>richard@bluetrainsoftware.com</email>
+      <id>rvowles</id>
+      <name>Richard Vowles</name>
+      <organization>Blue Train Software Ltd</organization>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
+  <dependencies>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>lib</directory>
+              <includes>
+                <include>**/**</include>
+              </includes>
+            </fileset>
+            <fileset>
+              <directory>docs</directory>
+              <includes>
+                <include>**/**</include>
+              </includes>
+            </fileset>
+            <fileset>
+              <directory>test</directory>
+              <includes>
+                <include>**/**</include>
+              </includes>
+            </fileset>
+            <fileset>
+              <directory>.openapi-generator</directory>
+              <includes>
+                <include>**/**</include>
+              </includes>
+            </fileset>
+            <fileset>
+              <directory>.openapi-generator</directory>
+              <includes>
+                <include>**/**</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>4.0.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.bluetrainsoftware.maven</groupId>
+            <artifactId>openapi-dart-generator</artifactId>
+            <version>2.3-SNAPSHOT</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>featurehub-api</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <output>${project.basedir}</output>
+              <inputSpec>api.yaml</inputSpec>
+              <language>dart2-api</language>
+              <enablePostProcessFile>true</enablePostProcessFile>
+              <additionalProperties>
+                <additionalProperty>
+                  pubName=iot_api
+                </additionalProperty>
+              </additionalProperties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>io.repaint.maven</groupId>
+        <artifactId>tiles-maven-plugin</artifactId>
+        <version>2.10</version>
+        <extensions>true</extensions>
+        <configuration>
+          <filtering>false</filtering>
+          <tiles>
+            <tile>io.featurehub.tiles:tile-java:[1.1,2)</tile>
+          </tiles>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

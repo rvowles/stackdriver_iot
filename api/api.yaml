@@ -1,0 +1,70 @@
+openapi: 3.0.1
+info:
+  title: stackdriver_iot_accumulator
+  description: This describes the API clients use for pushing metric data into stackdriver (as pulling makes no sense)
+  version: "1.1.1"
+paths:
+  /timeseries:
+    put:
+      tags:
+        - StackdriverIot
+      operationId: putTimeseries
+      responses:
+        "200":
+          description: "Resulting portfolio"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Timeseries"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Timeseries"
+components:
+  schemas:
+    Timeseries:
+      required:
+        - source
+        - sensorType
+        - points
+      properties:
+        source:
+          type: string
+        sensorType:
+          type: string
+        points:
+          type: array
+          items:
+            $ref: "#/components/schemas/TimeseriesPoint"
+    TimeseriesPoint:
+      required:
+        - sensor
+      properties:
+        type:
+          $ref: "#/components/schemas/PointType"
+        name:
+          description: "the name of the sensor providing the info, e.g. ds181b, etc"
+          type: string
+        when:
+          description: "optional type to send to stackdriver, must be in ISO9660 format, ideally UTC. Otherwise current timestamp will be used."
+          type: string
+          format: date-time
+        n:
+          type: number
+        s:
+          type: string
+        b:
+          type: boolean
+        i:
+          type: integer
+    PointType:
+      type: string
+      enum:
+        - TEMP_C
+        - PRESSURE_PA
+        - WEIGHT_IN_GRAMS
+
+
+

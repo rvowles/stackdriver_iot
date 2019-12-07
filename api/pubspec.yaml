@@ -1,0 +1,11 @@
+name: iot_api
+version: 1.0.0
+description: OpenAPI API client
+environment:
+  sdk: '>=2.2.0 <3.0.0'
+dependencies:
+  dio: '>= 3.0.3 <4.0.0'
+  openapi_dart_common: ^2.0.0
+collection: ^1.14.11
+dev_dependencies:
+  test: ^1.3.0

@@ -1,0 +1,37 @@
+= IOT StackDriver server
+
+Written in Dart to be run on MacOSX. Maybe a Raspberry Pi if they support it eventually.
+
+== why?
+
+- StackDriver is free for a _lot_ of requests that would work fine from your home
+- Its all cloud based so you can see it from wherever and set alerts on it.
+
+=== setting up
+
+- create a project
+- create a service account
+- create a json key for that service account and store it in ~/.stackdrivercreds.json
+- give it monitoring write roles in the IAM console
+
+
+=== running
+
+- api is define in the api subdirectory as an openapi. Need to run `mvn clean generate-sources`
+- otherwise run main.dart, pass `--project <your-project-name>` and it runs a server on port 3000 accepting traffic.
+
+It will attempt to create the metric types responsible for:
+
+- temperature (double)
+
+=== todo:
+
+support:
+
+- pressure (pascals - double)
+- humidity
+- weight
+
+its best to add each one as a different metric so its easy to find them. so if you have a soil sensor,
+turbidity, co2 measurement, etc, just extend an existing one.
+
