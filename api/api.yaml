@@ -62,9 +62,14 @@ components:
     PointType:
       type: string
       enum:
+        # temperature in celsius
         - TEMP_C
+        # pressure in pascals
         - PRESSURE_PA
-        - WEIGHT_IN_GRAMS
+        # humidity in percent
+        - HUMIDITY_PC
+        # weight in grams
+        - WEIGHT_GMS
 
 
 
