@@ -24,6 +24,21 @@ It will attempt to create the metric types responsible for:
 
 - temperature (double)
 
+=== macos
+
+NOTE: not working
+
+- copy the `com.bluetrainsoftware.iot.plist` to your `/Library/LaunchDaemons` folder. This will cause it
+to start on restart.
+
+type: 
+
+----
+sudo launchctl start com.bluetrainsoftware.iot.plist
+----
+
+to start it.
+
 === todo:
 
 support:

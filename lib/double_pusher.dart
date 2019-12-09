@@ -9,7 +9,7 @@ final _PREFIX_METRIC_TYPE =
 final _log = Logger('stackdriver');
 
 abstract class DoublePusher extends Pusher {
-  final MonitoringApi api;
+  MonitoringApi api;
   final String projectName;
   final String metricName;
   final String description;
@@ -19,8 +19,12 @@ abstract class DoublePusher extends Pusher {
   DoublePusher(this.api, this.projectName, this.metricName, this.description,
       this.displayName);
 
+  void setApi(MonitoringApi api) {
+    this.api = api;
+  }
+
   @override
-  Future<void> process(Timeseries timeseries) async {
+  Future<bool> process(Timeseries timeseries) async {
     final pointType = getType();
 
     final metric = Metric()
@@ -59,11 +63,15 @@ abstract class DoublePusher extends Pusher {
         await api.projects.timeSeries
             .create(CreateTimeSeriesRequest()..timeSeries = [ts], projectName);
         _log.info('published time series data for ${pointType}');
+        return true;
       } catch (e, s) {
         _log.severe(
             'Failed to publish point type ${pointType} for metric: ${timeseries}', e, s);
+        return false;
       }
     }
+
+    return true;
   }
 
   @override
