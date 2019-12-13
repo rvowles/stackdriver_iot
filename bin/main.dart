@@ -4,10 +4,10 @@ import 'package:logging/logging.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:iot_api/api.dart' as api;
-import 'package:stackdriver_iot/stackdriver_pusher.dart';
+import 'package:stackdriver_iot/stackdriver_manager.dart';
 
 final _log = Logger('iot');
-StackdriverPusherClient client;
+StackdriverManager client;
 
 void main(List<String> arguments) async {
   Logger.root.level = Level.ALL;
@@ -15,7 +15,7 @@ void main(List<String> arguments) async {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
 
-  client = StackdriverPusherClient(arguments);
+  client = StackdriverManager(arguments);
   await client.init();
 
   var handler = const shelf.Pipeline().addMiddleware(shelf.logRequests())

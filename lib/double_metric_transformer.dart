@@ -1,30 +1,25 @@
 import 'package:googleapis/monitoring/v3.dart';
 import 'package:iot_api/api.dart';
 import 'package:logging/logging.dart';
-import 'package:stackdriver_iot/pusher.dart';
+import 'package:stackdriver_iot/metric_transformer.dart';
 
 // have to use 'custom.googleapis.com/' as prefix cannot use anything else
 final _PREFIX_METRIC_TYPE =
     'custom.googleapis.com/iot/'; // add the metric name to this
 final _log = Logger('stackdriver');
 
-abstract class DoublePusher extends Pusher {
-  MonitoringApi api;
-  final String projectName;
+abstract class DoubleMetricTransformer extends MetricTransformer {
+
   final String metricName;
   final String description;
   final String displayName;
   MetricDescriptor metricDescriptor;
 
-  DoublePusher(this.api, this.projectName, this.metricName, this.description,
+  DoubleMetricTransformer(this.metricName, this.description,
       this.displayName);
 
-  void setApi(MonitoringApi api) {
-    this.api = api;
-  }
-
   @override
-  Future<bool> process(Timeseries timeseries) async {
+  TimeSeries process(Timeseries timeseries) {
     final pointType = getType();
 
     final metric = Metric()
@@ -54,28 +49,17 @@ abstract class DoublePusher extends Pusher {
     }).toList();
 
     if (points.isNotEmpty) {
-      final ts = TimeSeries()
+      return TimeSeries()
         ..metric = metric
         ..valueType = 'DOUBLE'
         ..points = points;
-
-      try {
-        await api.projects.timeSeries
-            .create(CreateTimeSeriesRequest()..timeSeries = [ts], projectName);
-        _log.info('published time series data for ${pointType}');
-        return true;
-      } catch (e, s) {
-        _log.severe(
-            'Failed to publish point type ${pointType} for metric: ${timeseries}', e, s);
-        return false;
-      }
     }
 
-    return true;
+    return null;
   }
 
   @override
-  Future<void> setupMetrics(
+  Future<void> setupMetrics(MonitoringApi api, String projectName,
       ListMetricDescriptorsResponse existingMetricDescriptors) async {
     final type = _PREFIX_METRIC_TYPE + metricName;
 

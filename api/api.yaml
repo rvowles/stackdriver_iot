@@ -64,12 +64,13 @@ components:
       enum:
         # temperature in celsius
         - TEMP_C
-        # pressure in pascals
-        - PRESSURE_PA
+        # pressure in hPascals
+        - PRESSURE_HPA
         # humidity in percent
         - HUMIDITY_PC
         # weight in grams
         - WEIGHT_GMS
+        - ANALOG_1024
 
 
 
