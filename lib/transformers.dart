@@ -1,6 +1,6 @@
 import 'package:iot_api/api.dart';
 
-import 'double_metric_transformer.dart';
+import 'numeric_metric_transformer.dart';
 import 'metric_transformer.dart';
 
 List<MetricTransformer> availableTransformers = [
@@ -19,7 +19,7 @@ class TemperatureTransformer extends DoubleMetricTransformer {
   }
 }
 
-class MoistureTransformer extends DoubleMetricTransformer {
+class MoistureTransformer extends IntegerMetricTransformer {
   MoistureTransformer() : super('soil_moisture', 'Analog reading of soil moisture', 'Soil Moisture');
 
   @override
